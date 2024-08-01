@@ -8,19 +8,25 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
+    "migrate:dev": "prisma migrate dev",
+    "migrate:deploy": "prisma migrate deploy",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
     "@nuxt/eslint": "^0.4.0",
     "@nuxtjs/tailwindcss": "^6.12.1",
+    "@prisma/adapter-pg": "^5.17.0",
     "nuxt": "^3.11.2",
+    "pg": "^8.12.0",
     "vue": "^3.4.27",
     "vue-router": "^4.3.2"
   },
   "devDependencies": {
+    "@prisma/client": "^5.17.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
-    "prettier": "^3.3.3"
+    "prettier": "^3.3.3",
+    "prisma": "^5.17.0"
   }
 }
