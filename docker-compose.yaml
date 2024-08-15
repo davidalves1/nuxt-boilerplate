@@ -1,6 +1,26 @@
+
 services:
+  app:
+    container_name: tigoo-app
+    build:
+      context: .
+      dockerfile: .docker/Dockerfile
+    entrypoint: sh -c "pnpm install --frozen-lockfile && pnpm dev"
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    ports:
+      - 3000:3000
+      - 24678:24678
+    networks:
+      - app-network
+    volumes:
+      - .:/app
+      - /app/node_modules
+    depends_on:
+      - db
+
   db:
-    container_name: postgres
+    container_name: tigoo-postgres
     image: postgres:latest
     environment:
       - POSTGRES_USER=Admin
@@ -8,10 +28,24 @@ services:
       - POSTGRES_DB=postgres #optional (specify default database instead of $POSTGRES_DB)
     ports:
       - "5432:5432"
-    restart: always
+    networks: 
+      - app-network
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
 
   adminer:
+    container_name: tigoo-adminer
     image: adminer
     restart: always
     ports:
       - 5005:8080
+    depends_on:
+      - db
+    networks:
+      - app-network
+
+networks:
+  app-network:
+
+volumes:
+  postgres-data:
